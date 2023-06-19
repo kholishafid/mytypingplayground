@@ -1,7 +1,7 @@
 const initialTypingState: TypingState = {
   paragraph: 'lorem ipsum dolor sit. lorem ipsum dolor sit. lorem',
   currentWordIndex: 0,
-  currentWord: '',
+  currentType: '',
   wordCompleted: []
 }
 
@@ -12,7 +12,7 @@ function typingReducer(state: TypingState, action: TypingAction): TypingState {
     case 'set_word_index':
       return { ...state, currentWordIndex: action.payload }
     case 'set_current_word':
-      return { ...state, currentWord: action.payload }
+      return { ...state, currentType: action.payload }
     case 'set_word_complete':
       return { ...state, wordCompleted: [...state.wordCompleted, action.payload] }
     default:

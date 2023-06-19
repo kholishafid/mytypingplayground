@@ -67,14 +67,14 @@
   color: greenyellow;
 }
 
-.cursor-a {
-  &::before {
-    content: "";
-    background-color: orange;
-    width: 4px;
-    height: 2.25rem;
-    display: inline-block;
-    animation: blink-animation 1s infinite;
-    position: absolute;
-  }
+.cursor-a::before {
+  content: "";
+  background-color: orange;
+  width: 3px;
+  position: absolute;
+  top: -4px;
+  height: 2.25rem;
+  display: inline-block;
+  animation: blink-animation 1s infinite;
+  position: absolute;
 }

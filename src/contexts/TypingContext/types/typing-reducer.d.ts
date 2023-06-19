@@ -1,7 +1,7 @@
 type TypingState = {
   paragraph: string
   currentWordIndex: number
-  currentWord: string
+  currentType: string
   wordCompleted: number[]
 }
 

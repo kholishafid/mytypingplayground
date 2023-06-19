@@ -3,7 +3,7 @@ import { TypingContext } from "../contexts/TypingContext/TypingContext"
 
 interface useTypeI {
   key: string,
-  nextWord: () => void
+  nextWord: (currentType: string, currentWord: string) => void,
 }
 
 export function useType(): useTypeI {
@@ -19,17 +19,15 @@ export function useType(): useTypeI {
       if (ev.key === 'Backspace') {
         setKey(key => key.slice(0, -1))
       }
-      if (ev.key === 'Tab') {
-        setKey(key => key + '    ')
-      }
-      console.log(ev)
     })
   }, [])
 
-  const nextWord = () => {
+  const nextWord = (currentType: string, currentWord: string) => {
     setKey('')
+    if (currentType === currentWord) {
+      dispatch({ type: 'set_word_complete', payload: state.currentWordIndex })
+    }
     dispatch({ type: 'set_word_index', payload: state.currentWordIndex + 1 })
-    dispatch({ type: 'set_word_complete', payload: state.currentWordIndex })
   }
 
   useEffect(() => {
