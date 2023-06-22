@@ -17,3 +17,10 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+.correct {
+  @apply text-lime-400 font-semibold;
+}
+.wrong {
+  @apply text-rose-500 font-semibold;
+}

@@ -1,13 +1,15 @@
 import './App.css'
 import TypingBlock from './components/TypingBlock'
-import TypingContextProvider from './contexts/TypingContext/TypingContextProvider'
+import TypingBoard from './components/TypingBoard'
+import TypingProvider from './contexts/TypingContext/TypingContextProvider'
 
 
 function App() {
   return (
-    <TypingContextProvider>
+    <TypingProvider>
+      <TypingBoard />
       <TypingBlock />
-    </TypingContextProvider>
+    </TypingProvider>
   )
 }
 

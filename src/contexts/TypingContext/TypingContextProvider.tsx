@@ -1,13 +1,19 @@
-import { FC, ReactNode, useReducer } from "react";
-import { TypingContext } from "./TypingContext";
-import { initialTypingState, typingReducer } from "./reducers/TypingReducer";
+import { FC, ReactNode, createContext, useReducer } from "react";
+import { TypingAction, TypingState, typingInitialState, typingReducer } from "../../reducers/TypingReducer";
 
-interface TypingContextProviderProps {
+type Action = (action: TypingAction) => void
+
+export const TypingContext = createContext<{ state: TypingState, dispatch: Action }>({
+  state: typingInitialState,
+  dispatch: () => null
+})
+
+interface TypingProviderProps {
   children: ReactNode
 }
 
-const TypingContextProvider: FC<TypingContextProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(typingReducer, initialTypingState)
+const TypingProvider: FC<TypingProviderProps> = ({ children }) => {
+  const [state, dispatch] = useReducer(typingReducer, typingInitialState)
 
   return (
     <TypingContext.Provider value={{ state, dispatch }}>
@@ -16,4 +22,4 @@ const TypingContextProvider: FC<TypingContextProviderProps> = ({ children }) => 
   );
 }
 
-export default TypingContextProvider;
+export default TypingProvider;

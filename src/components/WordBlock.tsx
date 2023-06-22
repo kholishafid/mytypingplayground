@@ -1,55 +1,32 @@
-import { FC, useContext, useEffect } from "react";
-import { TypingContext } from "../contexts/TypingContext/TypingContext";
+import { FC, useContext, useEffect, useRef } from "react";
+import { TypingContext } from "../contexts/TypingContext/TypingContextProvider";
 
 interface WordBlockProps {
   word: string
-  wordIndex: number
-  next: (currentType: string, currentWord: string) => void
-  wordLength: number
+  index: number
 }
 
-const WordBlock: FC<WordBlockProps> = ({ word, wordIndex, next, wordLength }) => {
-  const { state } = useContext(TypingContext)
+const WordBlock: FC<WordBlockProps> = ({ word, index }) => {
+  const { state, dispatch } = useContext(TypingContext)
+  const wordBlockElement = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
-    if (state.currentType.length === wordLength + 1) {
-      next(state.currentType, word)
+    if (wordBlockElement.current) {
+      dispatch({ type: 'SET_WORD_ELEMENT', payload: wordBlockElement })
     }
-  }, [state.currentType, word])
-
-  if (state.wordCompleted.includes(wordIndex)) {
-    return <span className="text-2xl font-mono text-lime-400">
-      {word} {' '}
-    </span>
-  }
-
-  if (state.currentWordIndex === wordIndex) {
-    return (
-      <>
-        <span className="text-2xl font-mono">
-          {
-            word.split('').map((letter, index) => {
-              return (
-                <span
-                  className={
-                    `relative ${letter === state.currentType.split('')[index] ? 'text-lime-400' : ''} 
-                     ${state.currentType.length === index ? 'cursor-a' : ''}`
-                  }
-                  key={index}>
-                  {letter}
-                </span>
-              )
-            })
-          } {' '}
-        </span>
-      </>
-    )
-  }
+  }, [dispatch, state.currentWordIndex])
 
   return (
     <>
-      <span className="text-2xl font-mono">
-        {word} {' '}
+      <span ref={index === state.currentWordIndex ? wordBlockElement : null}>
+        {word.split('').map((letter, i) => {
+          if (letter === ' ') {
+            return <span key={i}>&nbsp;</span>
+          }
+          return (
+            <span key={i}>{letter}</span>
+          )
+        })}
       </span>
     </>
   );
